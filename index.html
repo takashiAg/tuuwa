@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voicechat</title>
+    <!--<script src="/socket.io/socket.io.js"></script>-->
+    <script src="./js/uuid.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>-->
+    <script src="./js/peer.js"></script>
+    <script>
+        navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia;
+
+
+        let id = uuid()
+        let peer = new Peer(id, {host: 'localhost', port: 9000, path: '/peerjs'});
+
+        peer.on('open', function (id) {
+            console.log(id);
+        });
+        let mystream;
+
+        peer.on('call', function (call) {
+            call.answer(myStream);
+
+            call.on('stream', function (othersStream) {
+                document.getElementById("others-video").srcObject = othersStream;
+            });
+        });
+
+        function callTo(peerId) {
+            var call = peer.call(peerId, myStream);
+
+            call.on('stream', function (othersStream) {
+                document.getElementById("others-video").srcObject = othersStream;
+            });
+        }
+
+        function start() {
+            navigator.getUserMedia({audio: true, video: true}, function (stream) {
+                console.log(stream)
+                myStream = stream;
+                document.getElementById("video").srcObject = stream;
+            }, function () {
+            });
+        }
+
+        window.onload = () => {
+            start()
+        }
+    </script>
+</head>
+<body>
+<video id="video" autoplay muted></video>
+<video id="others-video" autoplay></video>
+</body>
+</html>
