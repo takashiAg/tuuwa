@@ -41,4 +41,14 @@ class Video {
     }
 }
 
+//
+// let peer = new Peer(id, {
+//     host: 'localhost', port: 9000, path: '/peerjs',
+//     // config: {
+//     //     'iceServers': [
+//     //         {url: 'stun:localhost:3478'},
+//     //         {url: 'turn:username@localhost:3478', credential: 'password'}]
+//     // }
+// });
+
 
