@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "node-turn": "0.0.4",
     "peer": "^0.2.10"
   }
 }
